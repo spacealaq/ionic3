@@ -2,5 +2,9 @@
   "name": "ionic3",
   "app_id": "",
   "type": "ionic-angular",
+  "proxies": [{
+    "path": "/api",
+    "proxyUrl": "http://localhost/appgricol/"
+  }],
   "integrations": {}
 }
