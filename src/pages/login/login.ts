@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams  } from 'ionic-angular';
 import { DataService } from '../../providers/data-service/data-service';
 /**
  * Generated class for the LoginPage page.
@@ -18,18 +18,32 @@ import { DataService } from '../../providers/data-service/data-service';
 })
 export class LoginPage {
 
-  user = {
-  	username:'test'
+  public data = <any>{};
+
+  public user = {
+  	username:'aleoas@gmail.com',
+    password:'aa012390',
+    redirect: ''
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ds: DataService) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public ds: DataService
+    ) {
   }
 
   login(){
   	this.ds.oauthToken(this.user)
     .then(data => {
-      console.log('then');
-      console.log(data);
+      this.ds.showLoading('hide');
+      this.data = data;
+      if(this.data.status == 'ok'){
+        this.ds.showToast(this.data.msg);
+        this.navCtrl.push('detail')
+      }else{
+        this.ds.showToast(this.data.msg);
+      }
     });
   	
   }

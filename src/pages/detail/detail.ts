@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from  '../home/home';
+import { DataService } from '../../providers/data-service/data-service';
 /**
  * Generated class for the DetailPage page.
  *
@@ -18,7 +19,11 @@ import { HomePage } from  '../home/home';
 })
 export class DetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public ds: DataService) {
+    this.ds.checkLogin();
   }
 
   ionViewDidLoad() {
