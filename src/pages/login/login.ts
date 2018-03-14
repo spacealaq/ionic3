@@ -33,10 +33,12 @@ export class LoginPage {
     public app: App) {
   }
 
+
   login(){
   	this.ds.oauthToken(this.user)
     .then(data => {
       this.ds.showLoading('hide');
+      this.ds.setPersist('user',data);
       this.data = data;
       if(this.data.status == 'ok'){
         this.ds.showToast(this.data.msg);

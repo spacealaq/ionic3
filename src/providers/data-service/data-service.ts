@@ -17,12 +17,15 @@ import { LoginPage } from '../../pages/login/login';
 
 let apiUrl = 'http://localhost/ionicserver/api/';
 let loading = <any>{};
+//let user = <any>{};
 
 @Injectable()
 export class DataService {
 
   protected headers: Headers;
   protected options: {};
+  protected persist: {};
+  protected user: {};
   @ViewChild(Nav) nav: Nav;
     
 
@@ -72,17 +75,41 @@ export class DataService {
 
   setPersist(key, value){
     if(value){
+      console.log('setPersist');
+      console.log(key);
+      console.log(value);
+      console.log(JSON.stringify(value));
       this.storage.set(key, JSON.stringify(value));
     }
   }
 
+  async callPersist(key){
+    return await this.storage.get(key);
+  }
+
   getPersist(key){
     if(key){
-      this.storage.get(key).then((val) => {
-        return val;
-      });
+      return this.storage.get(key);
+      //return this.callPersist(key);
+       /*this.callPersist('user').then(data => {
+         return data;
+       });*/
+       //return this.persist;
+      /*//this.storage.get(key).then(value => {
+                  //console.log(value);
+                  //val = value;
+              //});
+
+       Promise.all([
+        this.storage.get('name').then((data)=>{
+          this.persist=data;
+        })
+       ]);
+        console.log(this.persist);
+
+       console.log(val);*/
      }
-      return '';
+      return new Promise(resolve => {});
   }
 
   addHeaders(key,value){
@@ -114,7 +141,6 @@ export class DataService {
     return new Promise(resolve => {
       this.http.post(url,post,this.getOptions()).subscribe(data => {
         //this.showLoading('hide'); 
-        this.setPersist('user',data);
         resolve(data);
       }, err => {
         this.showLoading('hide');
@@ -125,14 +151,20 @@ export class DataService {
   }
 
   checkLogin(){
-       var user =  this.getPersist('user');
 
-       console.log('user');
-       console.log(user); 
-       if(user == '' || user == undefined || user == null){
-         return false;
-       }
-       return true;
+         /*var user = this.getPersist('user');
+
+         console.log('user');
+         console.log(user);*/
+        
+       this.getPersist('user').then(data => {
+         var user = data;
+         console.log('user');
+         console.log(user);
+         if(user == '' || user == undefined || user == null){
+           return false;
+         }
+         return true;
+       });
    }
-
 }

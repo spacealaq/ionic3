@@ -67,9 +67,9 @@ export class MyApp {
     ngAfterViewInit(){
       setTimeout(() => {
         console.log('ngAfterViewInit');
-        if(this.ds.checkLogin() == false){
-          this.nav.push(LoginPage);
-         }
+          if(this.ds.checkLogin() == false){
+            this.nav.push(LoginPage);
+          }
       }, 500);
       /*console.log(this.ds);
       if(this.ds.checkLogin() == false){
