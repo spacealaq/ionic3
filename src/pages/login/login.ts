@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,App  } from 'ionic-angular';
 import { DataService } from '../../providers/data-service/data-service';
 /**
  * Generated class for the LoginPage page.
@@ -19,18 +19,18 @@ import { DataService } from '../../providers/data-service/data-service';
 export class LoginPage {
 
   public data = <any>{};
-
+  
   public user = {
   	username:'aleoas@gmail.com',
     password:'aa012390',
     redirect: ''
   };
 
-  constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public ds: DataService
-    ) {
+  constructor( 
+    public ds: DataService,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public app: App) {
   }
 
   login(){

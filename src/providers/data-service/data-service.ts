@@ -1,8 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable,ViewChild } from '@angular/core';
+import { NavController, App, Nav} from "ionic-angular/index";
 import { HttpClient } from '@angular/common/http';
 import { ToastController, LoadingController  } from 'ionic-angular';
 import { RequestOptions, Headers, RequestMethod } from '@angular/http';
 import { Storage } from '@ionic/storage';
+import { LoginPage } from '../../pages/login/login';
+
+
 
 /*
   Generated class for the DataServiceProvider provider.
@@ -19,17 +23,18 @@ export class DataService {
 
   protected headers: Headers;
   protected options: {};
-  protected storage: Storage;
-
+  @ViewChild(Nav) nav: Nav;
     
 
   constructor(
     public http: HttpClient,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
-    //public navCtrl: NavController,
+    private storage: Storage,
+    private app:App
     ) {
     console.log('Hello DataServiceProvider Provider');
+
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Access-Control-Allow-Origin', '*');
@@ -40,8 +45,7 @@ export class DataService {
               method: RequestMethod.Post,
             });
 
-
-    
+    this.storage = storage;
   }
 
    showLoading(action){
@@ -66,18 +70,18 @@ export class DataService {
     return  this.options
   }
 
-  setPersist($key, $value){
-    if($value){
-      this.storage.set($key, JSON.stringify($value));
+  setPersist(key, value){
+    if(value){
+      this.storage.set(key, JSON.stringify(value));
     }
   }
 
-  getPersist($key){
-    console.log($key);
-    //console.log(this.storage.get($key));
-    if($key){
-         //return JSON.stringify(this.storage.get($key));  
-      }
+  getPersist(key){
+    if(key){
+      this.storage.get(key).then((val) => {
+        return val;
+      });
+     }
       return '';
   }
 
@@ -106,12 +110,11 @@ export class DataService {
   	}
   	var url = apiUrl+"auth/login";
 
-
-
     this.showLoading('show')
     return new Promise(resolve => {
       this.http.post(url,post,this.getOptions()).subscribe(data => {
         //this.showLoading('hide'); 
+        this.setPersist('user',data);
         resolve(data);
       }, err => {
         this.showLoading('hide');
@@ -122,18 +125,14 @@ export class DataService {
   }
 
   checkLogin(){
-       var usuario =  this.getPersist('usuario');
+       var user =  this.getPersist('user');
 
-       console.log(usuario);
-
-       if(usuario == '' || usuario == undefined){
-         //$rootScope.helper.hideWait();
-         //$rootScope.helper.shortToast('error','Ingresa con tu usuario y contraseña'); 
-         //this.navCtrl.push('login');
+       console.log('user');
+       console.log(user); 
+       if(user == '' || user == undefined || user == null){
          return false;
        }
-
        return true;
-     }
+   }
 
 }

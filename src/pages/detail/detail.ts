@@ -18,12 +18,12 @@ import { DataService } from '../../providers/data-service/data-service';
   templateUrl: 'detail.html',
 })
 export class DetailPage {
-
+  
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public ds: DataService) {
-    this.ds.checkLogin();
+    public ds: DataService
+    ) {
   }
 
   ionViewDidLoad() {
