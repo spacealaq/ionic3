@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastController, LoadingController  } from 'ionic-angular';
 import { RequestOptions, Headers, RequestMethod } from '@angular/http';
 import { Storage } from '@ionic/storage';
-import { LoginPage } from '../../pages/login/login';
+//import { LoginPage } from '../../pages/login/login';
 
 
 
@@ -17,7 +17,6 @@ import { LoginPage } from '../../pages/login/login';
 
 let apiUrl = 'http://localhost/ionicserver/api/';
 let loading = <any>{};
-//let user = <any>{};
 
 @Injectable()
 export class DataService {
@@ -75,11 +74,12 @@ export class DataService {
 
   setPersist(key, value){
     if(value){
-      console.log('setPersist');
+      /*console.log('setPersist');
       console.log(key);
       console.log(value);
       console.log(JSON.stringify(value));
-      this.storage.set(key, JSON.stringify(value));
+      this.storage.set(key, JSON.stringify(value));*/
+      localStorage.setItem(key, JSON.stringify(value));
     }
   }
 
@@ -89,7 +89,8 @@ export class DataService {
 
   getPersist(key){
     if(key){
-      return this.storage.get(key);
+      return localStorage.getItem(key);
+      //return this.storage.get(key);
       //return this.callPersist(key);
        /*this.callPersist('user').then(data => {
          return data;
@@ -152,19 +153,14 @@ export class DataService {
 
   checkLogin(){
 
-         /*var user = this.getPersist('user');
+         var user = this.getPersist('user');
 
          console.log('user');
-         console.log(user);*/
-        
-       this.getPersist('user').then(data => {
-         var user = data;
-         console.log('user');
          console.log(user);
+
          if(user == '' || user == undefined || user == null){
            return false;
          }
          return true;
-       });
    }
 }

@@ -8,7 +8,7 @@ import { DataService } from '../providers/data-service/data-service';
 import { LoginPage } from '../pages/login/login';
 import { DetailPage } from '../pages/detail/detail';
 
-import { TutorialPage } from '../pages/tutorial/tutorial';
+//import { TutorialPage } from '../pages/tutorial/tutorial';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,17 +21,16 @@ export class MyApp {
    @ViewChild(Nav) nav: Nav;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, app:App, ds:DataService) {
+    this.ds = ds;
+    this.app = app;
 
-    /*if(ds.checkLogin()){
+    if(this.ds.checkLogin() == true){
       this.rootPage = DetailPage;
+      console.log('detail');
     }else{
       this.rootPage = LoginPage;
-    }*/
-
-    this.rootPage = LoginPage;
-    this.ds = ds;
-
-    this.app = app;
+      console.log('login');
+    }
 
 
     platform.ready().then(() => {

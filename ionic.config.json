@@ -3,5 +3,7 @@
   "app_id": "",
   "type": "ionic-angular",
   "proxies": [],
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
